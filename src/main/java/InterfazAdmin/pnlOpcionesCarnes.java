@@ -230,7 +230,7 @@ public class pnlOpcionesCarnes extends javax.swing.JPanel {
         };
 
         //Establecemos titulos
-        String titulos[] = {"ID", "Marca", "Tipo de Carne", "Descipción", "Precio"};
+        String titulos[] = {"ID", "Marca", "Tipo de Carne", "Descipción", "Cantidad", "Precio"};
         //Envia los titulos a un identificador de columnas
         modeloTabla.setColumnIdentifiers(titulos);
 
@@ -243,7 +243,7 @@ public class pnlOpcionesCarnes extends javax.swing.JPanel {
             //Si no hay null, entonces recorrecmos la listaUsuarios
             for (Carne carnes : listaCarnes) {
                 //Guardarlo en un array o list de tipo object, porque hay varios tipos de datos
-                Object[] objeto = {carnes.getId(), carnes.getMarca(), carnes.getTipoDeCarne(), carnes.getDescripcion(), carnes.getPrecioGramos()};
+                Object[] objeto = {carnes.getId(), carnes.getMarca(), carnes.getTipoDeCarne(), carnes.getDescripcion(), carnes.getCantidad(), carnes.getPrecioGramos()};
 
                 //Agregamos el los datos que recorrio el for a la tabla 
                 modeloTabla.addRow(objeto);

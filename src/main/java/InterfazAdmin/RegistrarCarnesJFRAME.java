@@ -3,6 +3,7 @@ package InterfazAdmin;
 
 import Logica.Controladora;
 import Logica.Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,6 +47,8 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtPrecio = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtCantidad = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
@@ -89,6 +92,9 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Precio x Gramo");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Cantidad");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -100,9 +106,13 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
                         .addComponent(txtTipodeCarne)
                         .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMarca)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMarca, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5)
@@ -110,7 +120,7 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2))
                                 .addGap(0, 54, Short.MAX_VALUE))
-                            .addComponent(txtDescripcion))
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(39, 39, 39))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -129,10 +139,14 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -247,12 +261,24 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         
+        
+        
+        
         String marca = txtMarca.getText();
         String tipoCarne = txtTipodeCarne.getText();
         String descripcion = txtDescripcion.getText();
+        int cantidad = Integer.parseInt(txtCantidad.getText());
         double precio = Double.parseDouble(txtPrecio.getText());
         
-        control.agregarCarne(marca, tipoCarne, descripcion, precio);
+        
+        if(marca.isEmpty() || tipoCarne.isEmpty() || descripcion.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Rellene todos los campos");
+            
+        }
+        else{
+        control.agregarCarne(marca, tipoCarne, descripcion, cantidad,precio);
+        }
+        
         
         
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -268,10 +294,12 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtPrecio;

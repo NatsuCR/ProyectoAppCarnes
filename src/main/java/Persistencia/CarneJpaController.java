@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Persistencia;
 
 import Logica.Carne;
@@ -28,12 +31,11 @@ public class CarneJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-        //Conector a base de datos, HACERLO SIEMPRE, conecta a la logica
+            //Conector a base de datos, HACERLO SIEMPRE, conecta a la logica
     public CarneJpaController(){
     
         emf = Persistence.createEntityManagerFactory("AppCarnesProyectoFinal");
     }
-    
     public void create(Carne carne) {
         EntityManager em = null;
         try {

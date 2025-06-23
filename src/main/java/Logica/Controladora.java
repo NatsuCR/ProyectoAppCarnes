@@ -112,12 +112,13 @@ public class Controladora {
         return controlPersistencia.traerUsuarioPorId(id_usuario);
     }
 
-    public void agregarCarne(String marca, String tipoCarne, String descripcion, double precio) {
+    public void agregarCarne(String marca, String tipoCarne, String descripcion, int cantidad, double precio) {
         Carne carnes = new Carne();
 
         carnes.setMarca(marca);
         carnes.setTipoDeCarne(tipoCarne);
         carnes.setDescripcion(descripcion);
+        carnes.setCantidad(cantidad);
         carnes.setPrecioGramos(precio);
 
         JOptionPane.showMessageDialog(null, "Guardado con exito!");
@@ -132,10 +133,11 @@ public class Controladora {
         controlPersistencia.borrarCarne(id_Carne);
     }
 
-    public void editarCarne(Carne carneEditar, String marca, String tipoCarne, String descripcion, double precio) {
+    public void editarCarne(Carne carneEditar, String marca, String tipoCarne, String descripcion,int cantidad, double precio) {
         carneEditar.setMarca(marca);
         carneEditar.setTipoDeCarne(tipoCarne);
         carneEditar.setDescripcion(descripcion);
+        carneEditar.setCantidad(cantidad);
         carneEditar.setPrecioGramos(precio);
         controlPersistencia.editarCarne(carneEditar);
     }
