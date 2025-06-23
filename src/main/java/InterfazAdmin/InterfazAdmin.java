@@ -3,7 +3,7 @@ package InterfazAdmin;
 
 import Logica.Controladora;
 import Logica.Usuario;
-
+import Login.Login;
 /**
  *
  * @author jarav
@@ -38,7 +38,7 @@ public class InterfazAdmin extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        txtNomnreCedula = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnRegistrarUsuario = new javax.swing.JButton();
@@ -49,17 +49,29 @@ public class InterfazAdmin extends javax.swing.JFrame {
         pnlContenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1250, 500));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
+        jPanel1.setBackground(new java.awt.Color(153, 0, 0));
+
+        jPanel3.setBackground(new java.awt.Color(255, 51, 0));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Administración");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Bienvenido:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("-Usuario-");
+        txtNomnreCedula.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtNomnreCedula.setForeground(new java.awt.Color(255, 255, 255));
+        txtNomnreCedula.setText("-Usuario-");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -71,8 +83,8 @@ public class InterfazAdmin extends javax.swing.JFrame {
                 .addGap(275, 275, 275)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addContainerGap(383, Short.MAX_VALUE))
+                .addComponent(txtNomnreCedula)
+                .addContainerGap(633, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,13 +93,16 @@ public class InterfazAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(txtNomnreCedula))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(204, 0, 0));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel4.setForeground(new java.awt.Color(204, 0, 0));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Opciones");
 
         btnRegistrarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -100,41 +115,56 @@ public class InterfazAdmin extends javax.swing.JFrame {
 
         btnRegistrarCarnes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRegistrarCarnes.setText("Registrar Carnes");
+        btnRegistrarCarnes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarCarnesActionPerformed(evt);
+            }
+        });
 
         btnCalcular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCalcular.setText("Calcular");
 
         btnVolver.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnRegistrarCarnes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnVolver, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(71, 71, 71))))
+                            .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel4)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(23, 23, 23)
+                .addGap(18, 18, 18)
                 .addComponent(btnRegistrarUsuario)
                 .addGap(18, 18, 18)
                 .addComponent(btnRegistrarCarnes)
@@ -142,9 +172,9 @@ public class InterfazAdmin extends javax.swing.JFrame {
                 .addComponent(btnCalcular)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
                 .addComponent(btnVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnSalir)
-                .addGap(19, 19, 19))
+                .addGap(18, 18, 18))
         );
 
         pnlContenedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -207,7 +237,7 @@ public class InterfazAdmin extends javax.swing.JFrame {
         int x = 0;
         int y = 0;
 
-        pnlRegistrarUsuario agregar = new pnlRegistrarUsuario();
+        pnlOpcionesUsuarios agregar = new pnlOpcionesUsuarios(control, usr);
         agregar.setSize(width, height);
         agregar.setLocation(x, y);
 
@@ -216,6 +246,47 @@ public class InterfazAdmin extends javax.swing.JFrame {
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
     }//GEN-LAST:event_btnRegistrarUsuarioActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        this.txtNomnreCedula.setText(usr.getCedula());
+        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnRegistrarCarnesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCarnesActionPerformed
+        // TODO add your handling code here:
+        
+                // Obtener dimensiones actuales del contenedor
+        int width = pnlContenedor.getWidth();
+        int height = pnlContenedor.getHeight();
+
+        int x = 0;
+        int y = 0;
+
+        pnlOpcionesCarnes agregar = new pnlOpcionesCarnes(control, usr);
+        agregar.setSize(width, height);
+        agregar.setLocation(x, y);
+
+        pnlContenedor.removeAll();
+        pnlContenedor.add(agregar);
+        pnlContenedor.revalidate();
+        pnlContenedor.repaint();
+        
+    }//GEN-LAST:event_btnRegistrarCarnesActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Salio de la aplicación");
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+        Login l = new Login();
+        l.setVisible(true);
+        l.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
 
 
@@ -227,11 +298,11 @@ public class InterfazAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel pnlContenedor;
+    private javax.swing.JLabel txtNomnreCedula;
     // End of variables declaration//GEN-END:variables
 }

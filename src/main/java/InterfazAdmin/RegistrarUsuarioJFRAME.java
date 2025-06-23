@@ -1,7 +1,11 @@
 package InterfazAdmin;
 
+import Encriptaciones.Hashead;
 import Logica.Controladora;
+import Logica.Rol;
 import Logica.Usuario;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,6 +15,7 @@ public class RegistrarUsuarioJFRAME extends javax.swing.JFrame {
 
     Controladora control;
     Usuario usr;
+    Hashead hash = new Hashead();
 
     public RegistrarUsuarioJFRAME(Controladora control, Usuario usr) {
         this.control = control;
@@ -43,6 +48,11 @@ public class RegistrarUsuarioJFRAME extends javax.swing.JFrame {
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -71,6 +81,12 @@ public class RegistrarUsuarioJFRAME extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Cedula");
 
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaActionPerformed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("ROL");
 
@@ -79,9 +95,19 @@ public class RegistrarUsuarioJFRAME extends javax.swing.JFrame {
 
         btnAgregar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnVolver.setText("Volver");
@@ -179,6 +205,56 @@ public class RegistrarUsuarioJFRAME extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+
+        String cedula = txtCedula.getText();
+        String contraseñaVisible = txtContraseña.getText();
+        String rol = (String) cboxRol.getSelectedItem();
+
+        if (cedula.isEmpty() || contraseñaVisible.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Los campos están vacíos!");
+            return;
+        }
+
+        // Encriptás la contraseña visible
+        String contraseñaEncriptada = Hashead.encriptarContraseña(contraseñaVisible);
+
+        if (!control.existe(cedula)) {
+            control.crearUsuario(cedula, contraseñaEncriptada, rol);
+
+            // Limpieza
+            txtCedula.setText("");
+            txtContraseña.setText("");
+            cboxRol.setSelectedIndex(0);
+        }
+
+
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        List<Rol> listaRoles = control.traerRoles();
+        if (listaRoles != null) {
+            for (Rol rol : listaRoles) {
+                cboxRol.addItem(rol.getNombreRol());
+            }
+
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+
+        txtCedula.setText("");
+        txtContraseña.setText("");
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+        // TODO add your handling code here:
+        txtContraseña.requestFocus();
+    }//GEN-LAST:event_txtCedulaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

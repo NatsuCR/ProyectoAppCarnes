@@ -8,17 +8,18 @@ import InterfazAdmin.InterfazAdmin;
 import Logica.Controladora;
 import Logica.Usuario;
 import javax.swing.JOptionPane;
+
 public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
     Controladora control;
-    
+
     public Login() {
         initComponents();
         control = new Controladora();
-    
+        //iniciarSesionAutomatico();
     }
 
     /**
@@ -42,11 +43,14 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(204, 0, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
 
+        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Iniciar Sesion");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -66,15 +70,33 @@ public class Login extends javax.swing.JFrame {
                 .addGap(21, 21, 21))
         );
 
+        jPanel3.setBackground(new java.awt.Color(255, 0, 0));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(204, 204, 204)));
+        jPanel3.setForeground(new java.awt.Color(255, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Cedula");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Contraseña");
 
+        txtCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCedulaActionPerformed(evt);
+            }
+        });
+
+        txtContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtContraseñaActionPerformed(evt);
+            }
+        });
+
+        btnIniciar.setBackground(new java.awt.Color(255, 51, 0));
         btnIniciar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
         btnIniciar.setText("Iniciar");
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,7 +179,45 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         // TODO add your handling code here:
-        
+        String cedula = txtCedula.getText();
+        String contraseña = txtContraseña.getText();
+
+        if (cedula.isEmpty() || contraseña.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor rellene los datos");
+            return;
+        }
+
+        Usuario usr = control.validarUsuario(cedula, contraseña);
+
+        if (usr != null) {
+            System.out.println("Logueado correctamente");
+
+            String rol = usr.getUnRol().getNombreRol();
+            if (rol.equals("Admin")) {
+                InterfazAdmin admin = new InterfazAdmin(control, usr);
+                admin.setVisible(true);
+                admin.setLocationRelativeTo(null);
+                this.dispose();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto");
+        }
+    }//GEN-LAST:event_btnIniciarActionPerformed
+    private void iniciarSesionAutomatico() {
+        txtCedula.setText("208450858");
+        txtContraseña.setText("123");
+        btnIniciarActionPerformed(null);
+    }
+
+
+    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+        // TODO add your handling code here:
+        txtContraseña.requestFocus();
+    }//GEN-LAST:event_txtCedulaActionPerformed
+
+    private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
+        // TODO add your handling code here:
+
         String cedula = txtCedula.getText();
         String contraseña = txtContraseña.getText();
         Usuario usr = control.validarUsuario(cedula, contraseña);
@@ -177,8 +237,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto");
             }
         }
-    }//GEN-LAST:event_btnIniciarActionPerformed
-
+    }//GEN-LAST:event_txtContraseñaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

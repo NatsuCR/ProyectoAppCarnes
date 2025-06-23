@@ -11,7 +11,8 @@ public class AppCarnesProyectoFinal {
 
     public static void main(String[] args) {
         Login l = new Login();
-        l.setVisible(true);
+        l.setVisible(true); //FALSE PARA NO DOBLE PANTALLA.
         l.setLocationRelativeTo(null);
+        
     }
 }

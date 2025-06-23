@@ -4,6 +4,9 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>Logica.Rol</class>
     <class>Logica.Usuario</class>
+    <class>Logica.Carne</class>
+    <class>Logica.DetalleVenta</class>
+    <class>Logica.Venta</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/appcarnes?serverTimezone = UTC"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
