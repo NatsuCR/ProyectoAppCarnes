@@ -268,6 +268,23 @@ public class InterfazAdmin extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         this.txtNomnreCedula.setText(usr.getCedula() + " " + usr.getNombre());
+                // TODO add your handling code here:
+        // Obtener dimensiones actuales del contenedor
+        int width = pnlContenedor.getWidth();
+        int height = pnlContenedor.getHeight();
+
+        int x = 0;
+        int y = 0;
+
+        pnlOpcionesUsuarios agregar = new pnlOpcionesUsuarios(control, usr, carnes, ventas);
+        agregar.setSize(width, height);
+        agregar.setLocation(x, y);
+
+        pnlContenedor.removeAll();
+        pnlContenedor.add(agregar);
+        pnlContenedor.revalidate();
+        pnlContenedor.repaint();
+        
 
     }//GEN-LAST:event_formWindowOpened
 
