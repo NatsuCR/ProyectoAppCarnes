@@ -67,12 +67,12 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         //Envia los titulos a un identificador de columnas
         modeloTabla.setColumnIdentifiers(titulos);
 
-        //Traer de la BD la lista de usuarios
+        //Traer de la BD la lista de Venta
         List<Venta> listaVentas = control.traerVentas();
 
         //Validar que no sea null
         if (listaVentas != null) {
-            //Si no hay null, entonces recorrecmos la listaUsuarios
+            //Si no hay null, entonces recorrecmos la listaVentas
             for (Venta vent : listaVentas) {
                 NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
                 String totalFormateado = formatoMiles.format(vent.getTotal());
@@ -113,7 +113,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Historial de ventas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -215,7 +215,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                .addComponent(JScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -297,7 +297,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         modelo.addColumn("Fecha");
         modelo.addColumn("Cantidad Adquirida");
         modelo.addColumn("Total");
-
+        //Convertir a formato español
         NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
 
         // Llenar el modelo con los datos filtrados
@@ -354,7 +354,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         String fechaSegura = formatoArchivo.format(fechaConvertida);
         String fechaBonita = formatoEspañol.format(fechaConvertida);
 
-        // Formatear total
+        // Formatear total para la fecha en español
         precioTotal = precioTotal.replace(".", "").replace(",", "").replace("₡", "").trim();
         int totalEntero = Integer.parseInt(precioTotal);
         NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
@@ -368,7 +368,8 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         // Crear fuente con Arial
         BaseFont bf = BaseFont.createFont("C:/Users/jarav/Documents/NetBeansProjects/AppCarnesProyectoFinal/Arial Folder/ARIAL.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         Font font = new Font(bf, 12, Font.NORMAL);
-
+        
+        //Empieza el documento
         documento.open();
 
         // Crear párrafos con alineación centrada
@@ -415,9 +416,9 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         Paragraph graciasParrafo = new Paragraph("Gracias por su compra.", font);
         graciasParrafo.setAlignment(Element.ALIGN_CENTER);
         documento.add(graciasParrafo);
-
+        //Se cierra el documento
         documento.close();
-
+        
         JOptionPane.showMessageDialog(null, "Factura generada correctamente:\n" + ruta);
     } catch (Exception e) {
         e.printStackTrace();
