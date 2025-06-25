@@ -4,9 +4,11 @@ import Persistencia.ControladoraPersistencia;
 import java.util.List;
 import javax.swing.JOptionPane;
 import Encriptaciones.Hashead;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -157,6 +159,9 @@ public class Controladora {
         int subtotal = cantidad * precio;
         double porcentajeReal = porcentaje / 100;
         int total = (int) (subtotal + (subtotal * porcentajeReal));
+        NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
+        String totalFormateado = formatoMiles.format(total);
+        JOptionPane.showMessageDialog(null, "La cantidad calculada es de: "+ totalFormateado + " colones");
         return total;
     }
     

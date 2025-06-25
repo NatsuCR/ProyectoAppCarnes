@@ -4,8 +4,10 @@ import Logica.Carne;
 import Logica.Controladora;
 import Logica.Usuario;
 import Logica.Venta;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -562,6 +564,7 @@ public class CalcularVentaJFRAME extends javax.swing.JFrame {
         txtTipodeCarne.setText("");
         txtTotal.setText("");
         txtUsuario.setText("");
+        
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void TablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaUsuariosMouseClicked
@@ -575,17 +578,47 @@ public class CalcularVentaJFRAME extends javax.swing.JFrame {
     }//GEN-LAST:event_TablaCarnesMouseClicked
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        // TODO add your handling code here:
-        String usuario = txtUsuario.getText();
-        String apellidos = txtApellidos.getText();
-        String marca = txtTipodeMarca.getText();
-        String tipoCarne = txtTipodeCarne.getText();
-        int cantidad = Integer.parseInt(txtCantidad.getText());
-        int precio = Integer.parseInt(txtPrecio.getText());
-        double porcentaje = Double.parseDouble(txtPorcentaje.getText());
-        int idUsuario = Integer.parseInt(txtIdUsuario.getText());
-        int idCarne = Integer.parseInt(txtIdCarne.getText());
+        // Obtener datos de los campos
+        String usuario = txtUsuario.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String marca = txtTipodeMarca.getText().trim();
+        String tipoCarne = txtTipodeCarne.getText().trim();
+        String condicionalCantidad = txtCantidad.getText().trim();
+        String condicionalPrecio = txtPrecio.getText().trim();
+        String condicionalPorcentaje = txtPorcentaje.getText().trim();
+        String condicionalIDUsuario = txtIdUsuario.getText().trim();
+        String condicionalIDCarne = txtIdCarne.getText().trim();
+        String condicionalFecha = (txtFecha.getDate() != null) ? txtFecha.getDate().toString() : "";
+
+        // Validar que ningún campo esté vacío
+        if (usuario.isEmpty() || apellidos.isEmpty() || marca.isEmpty() || tipoCarne.isEmpty()
+                || condicionalCantidad.isEmpty() || condicionalPrecio.isEmpty()
+                || condicionalPorcentaje.isEmpty() || condicionalIDUsuario.isEmpty()
+                || condicionalIDCarne.isEmpty() || condicionalFecha.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor rellene todos los campos");
+            return;
+        }
+
+        // Convertir campos numéricos y fecha con manejo de errores
+        int cantidad, precio, idUsuario, idCarne;
+        double porcentaje;
         Date fecha = txtFecha.getDate();
+
+        try {
+            cantidad = Integer.parseInt(condicionalCantidad);
+            precio = Integer.parseInt(condicionalPrecio);
+            porcentaje = Double.parseDouble(condicionalPorcentaje);
+            idUsuario = Integer.parseInt(condicionalIDUsuario);
+            idCarne = Integer.parseInt(condicionalIDCarne);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese valores numéricos válidos en cantidad, precio, porcentaje, ID usuario o ID carne.");
+            return;
+        }
+
+        if (fecha == null) {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione una fecha válida.");
+            return;
+        }
 
         // Validación de cantidad disponible
         int cantidadDisponible = control.obtenerCantidadDisponible(idCarne);
@@ -593,18 +626,21 @@ public class CalcularVentaJFRAME extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "La cantidad ingresada (" + cantidad
                     + ") supera la disponible en inventario (" + cantidadDisponible + ").");
             return;
-        } 
-        //Hacer las condiciones
-        else {
-            int totalCalculado = control.calcular(cantidad, precio, porcentaje);
-            Venta nuevaVenta = new Venta();
-            txtTotal.setText(String.valueOf(totalCalculado));
-
-            control.eliminarCantidadesenBD(idCarne, cantidad);
-            control.agregarVenta(nuevaVenta, idUsuario, usuario, apellidos, idCarne, marca, tipoCarne, cantidad, precio, fecha, totalCalculado);
-            cargarTablasCarnes();
-            cargarTablasClientes();
         }
+
+        // Realizar cálculo y registrar venta
+        int totalCalculado = control.calcular(cantidad, precio, porcentaje);
+        Venta nuevaVenta = new Venta();
+        NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
+        String totalFormateado = formatoMiles.format(totalCalculado);
+
+        txtTotal.setText(String.valueOf(totalFormateado));
+        control.eliminarCantidadesenBD(idCarne, cantidad);
+        control.agregarVenta(nuevaVenta, idUsuario, usuario, apellidos, idCarne, marca, tipoCarne, cantidad, precio, fecha, totalCalculado);
+
+        // Actualizar tablas
+        cargarTablasCarnes();
+        cargarTablasClientes();
 
 
     }//GEN-LAST:event_btnCalcularActionPerformed

@@ -8,6 +8,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -292,8 +293,12 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         modelo.addColumn("Cantidad Adquirida");
         modelo.addColumn("Total");
 
+        NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
+
         // Llenar el modelo con los datos filtrados
         for (Venta v : ventasDelDia) {
+            String totalFormateado = formatoMiles.format(v.getTotal());
+
             modelo.addRow(new Object[]{
                 v.getId(),
                 v.getIdUsuario(),
@@ -304,7 +309,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
                 v.getTipoDeMarca(),
                 v.getFecha(), // <--- GUARDA EL DATE ORIGINAL AQUÍ
                 v.getCantidadAdquirida(),
-                v.getTotal()
+                totalFormateado // ✅ Total con puntos
             });
         }
 
@@ -314,14 +319,15 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
 
     private void btnHacerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHacerFacturaActionPerformed
         // TODO add your handling code here:
-        int filaSeleccionada = TablaHistorialVentas.getSelectedRow();
+    int filaSeleccionada = TablaHistorialVentas.getSelectedRow();
 
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(null, "Seleccione una venta de la tabla.");
-            return;
-        }
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(null, "Seleccione una venta de la tabla.");
+        return;
+    }
 
-        // Obtener datos de la fila
+    try {
+        // Obtener datos
         String idCompra = TablaHistorialVentas.getValueAt(filaSeleccionada, 0).toString();
         String idUsuario = TablaHistorialVentas.getValueAt(filaSeleccionada, 1).toString();
         String nombreUsuario = TablaHistorialVentas.getValueAt(filaSeleccionada, 2).toString();
@@ -333,45 +339,46 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         String cantidad = TablaHistorialVentas.getValueAt(filaSeleccionada, 8).toString();
         String precioTotal = TablaHistorialVentas.getValueAt(filaSeleccionada, 9).toString();
 
-        // Transformar a fecha segura
-        try {
+        // Parsear fecha
+        SimpleDateFormat formatoEntrada = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        Date fechaConvertida = formatoEntrada.parse(fechaOriginal);
 
-            // Parsear la fecha original
-            SimpleDateFormat formatoEntrada = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-            Date fechaConvertida = formatoEntrada.parse(fechaOriginal);
+        SimpleDateFormat formatoArchivo = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        SimpleDateFormat formatoEspañol = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es", "ES"));
 
-            // Formato seguro para el nombre del archivo
-            SimpleDateFormat formatoArchivo = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String fechaSegura = formatoArchivo.format(fechaConvertida);
+        String fechaBonita = formatoEspañol.format(fechaConvertida);
 
-            // Formato bonito en español para mostrar en la factura
-            SimpleDateFormat formatoEspañol = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy 'a las' HH:mm:ss", new Locale("es", "ES"));
+        // Formatear total
+        precioTotal = precioTotal.replace(".", "");
+        int totalEntero = Integer.parseInt(precioTotal);
+        NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
+        String totalFormateado = formatoMiles.format(totalEntero);
 
-            String fechaSegura = formatoArchivo.format(fechaConvertida);
-            String fechaBonita = formatoEspañol.format(fechaConvertida);
+        // Crear PDF
+        Document documento = new Document();
+        String ruta = "Factura_" + nombreUsuario + "_" + fechaSegura + ".pdf";
+        PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+        documento.open();
 
-            Document documento = new Document();
-            String ruta = "Factura_" + nombreUsuario + "_" + fechaSegura + ".pdf";
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
-            documento.open();
+        documento.add(new Paragraph("----- FACTURA DE VENTA -----"));
+        documento.add(new Paragraph("Id de compra " + "(Id: " + idCompra + ")"));
+        documento.add(new Paragraph("Cliente: " + nombreUsuario + " " + apellidos + " (ID: " + idUsuario + ")"));
+        documento.add(new Paragraph("Id de carne " + "(Id: " + idCarne + ")"));
+        documento.add(new Paragraph("Tipo de carne: " + tipoCarne));
+        documento.add(new Paragraph("Tipo de Marca: " + tipoMarca));
+        documento.add(new Paragraph("Fecha: " + fechaBonita));
+        documento.add(new Paragraph("Cantidad: " + cantidad + " Unidades"));
+        documento.add(new Paragraph("Total a pagar: " + totalFormateado + " Colones"));
+        documento.add(new Paragraph("---------------------------------"));
+        documento.add(new Paragraph("Gracias por su compra."));
 
-            documento.add(new Paragraph("----- FACTURA DE VENTA -----"));
-            documento.add(new Paragraph("Id de compra " + "" + "(Id: " + idCompra + ")"));
-            documento.add(new Paragraph("Cliente: " + nombreUsuario + " " + apellidos + " (ID: " + idUsuario + ")"));
-            documento.add(new Paragraph("Id de carne" + "" + "(Id: " + idCarne + ")"));
-            documento.add(new Paragraph("Tipo de carne: " + tipoCarne));
-            documento.add(new Paragraph("Tipo de Marca: " + tipoMarca));
-            documento.add(new Paragraph("Fecha: " + fechaBonita));
-            documento.add(new Paragraph("Cantidad: " + cantidad + " Unidades"));
-            documento.add(new Paragraph("Total a pagar: " + precioTotal + " Colones"));
-            documento.add(new Paragraph("---------------------------------"));
-            documento.add(new Paragraph("Gracias por su compra."));
-
-            documento.close();
-            JOptionPane.showMessageDialog(null, "Factura generada correctamente:\n" + ruta);
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al generar la factura.");
-        }
+        documento.close();
+        JOptionPane.showMessageDialog(null, "Factura generada correctamente:\n" + ruta);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al generar la factura.");
+    }
     }//GEN-LAST:event_btnHacerFacturaActionPerformed
 
 
