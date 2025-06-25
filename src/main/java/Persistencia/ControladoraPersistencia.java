@@ -3,6 +3,7 @@ package Persistencia;
 import Logica.Carne;
 import Logica.Rol;
 import Logica.Usuario;
+import Logica.Venta;
 import Persistencia.exceptions.NonexistentEntityException;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,11 +15,13 @@ import java.util.logging.Logger;
  */
 public class ControladoraPersistencia {
 
+
+
     RolJpaController controladorPersiRol = new RolJpaController();
     UsuarioJpaController controladorPersiUsuario = new UsuarioJpaController();
     CarneJpaController controladorPersiCarne = new CarneJpaController();
-    
-    
+    VentaJpaController controladorPersiVenta = new VentaJpaController();
+
     public List<Usuario> traerUsuarios() {
 
         //Trae todas las listas de usarios existentes
@@ -54,17 +57,18 @@ public class ControladoraPersistencia {
     }
 
     public Usuario traerUsuarioPorId(int id_usuario) {
-       return controladorPersiUsuario.findUsuario(id_usuario);
+        return controladorPersiUsuario.findUsuario(id_usuario);
     }
 
     public void crearCarne(Carne carnes) {
-       controladorPersiCarne.create(carnes);
+        controladorPersiCarne.create(carnes);
     }
 
     public List<Carne> traerCarne() {
         return controladorPersiCarne.findCarneEntities();
     }
-       public void editarCarne(Carne carneEditar) {
+
+    public void editarCarne(Carne carneEditar) {
         try {
             controladorPersiCarne.edit(carneEditar);
         } catch (Exception ex) {
@@ -73,19 +77,48 @@ public class ControladoraPersistencia {
     }
 
     public void borrarCarne(int id_Carne) {
-      
+
         try {
             controladorPersiCarne.destroy(id_Carne);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
+
     }
 
     public Carne traerCarnePorId(int id_Carne) {
         return controladorPersiCarne.findCarne(id_Carne);
     }
 
+    
+    
+    
+    public void borrarCarneCantidades(int idCarne, int cantidad) {
+        Carne carne = controladorPersiCarne.findCarne(idCarne);
+        if (carne != null) {
+            int cantidadActual = carne.getCantidad(); // ← asumimos que tenés un campo "cantidad"
+            int nuevaCantidad = cantidadActual - cantidad;
 
+            if (nuevaCantidad < 0) {
+                nuevaCantidad = 0; // Por seguridad, no permitir negativos
+            }
+
+            carne.setCantidad(nuevaCantidad);
+
+            try {
+                controladorPersiCarne.edit(carne); // guardamos la nueva cantidad en la BD
+            } catch (Exception ex) {
+                Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void agregarVenta(Venta NuevaVenta) {
+       controladorPersiVenta.create(NuevaVenta);
+    }
+
+    public List<Venta> traerVentas() {
+        return controladorPersiVenta.findVentaEntities();
+    }
 
 }

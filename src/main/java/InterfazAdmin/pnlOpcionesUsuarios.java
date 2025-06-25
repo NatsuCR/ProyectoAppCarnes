@@ -1,7 +1,9 @@
 package InterfazAdmin;
 
+import Logica.Carne;
 import Logica.Controladora;
 import Logica.Usuario;
+import Logica.Venta;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -19,11 +21,14 @@ public class pnlOpcionesUsuarios extends javax.swing.JPanel {
      */
     Usuario usr;
     Controladora control;
-
-    public pnlOpcionesUsuarios(Controladora control, Usuario usr) {
+Carne carnes;
+Venta ventas;
+    public pnlOpcionesUsuarios(Controladora control, Usuario usr, Carne carnes, Venta ventas) {
         initComponents();
         this.control = control;
         this.usr = usr;
+        this.carnes = carnes;
+        this.ventas = ventas;
         //Cargar Tabla
         cargarTabla();
 
@@ -236,7 +241,7 @@ public class pnlOpcionesUsuarios extends javax.swing.JPanel {
         };
 
         //Establecemos titulos
-        String titulos[] = {"ID", "Nombre", "Rol"};
+        String titulos[] = {"ID", "Cedula", "Nombre", "Apellidos", "Rol"};
         //Envia los titulos a un identificador de columnas
         modeloTabla.setColumnIdentifiers(titulos);
 
@@ -248,7 +253,7 @@ public class pnlOpcionesUsuarios extends javax.swing.JPanel {
             //Si no hay null, entonces recorrecmos la listaUsuarios
             for (Usuario usu : listaUsuarios) {
                 //Guardarlo en un array o list de tipo object, porque hay varios tipos de datos
-                Object[] objeto = {usu.getId(), usu.getCedula(), usu.getUnRol().getNombreRol()};
+                Object[] objeto = {usu.getId(), usu.getCedula(),usu.getNombre(),usu.getApellidos(), usu.getUnRol().getNombreRol()};
 
                 //Agregamos el los datos que recorrio el for a la tabla 
                 modeloTabla.addRow(objeto);
@@ -264,7 +269,7 @@ public class pnlOpcionesUsuarios extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        RegistrarUsuarioJFRAME usuario = new RegistrarUsuarioJFRAME(control, usr);
+        RegistrarUsuarioJFRAME usuario = new RegistrarUsuarioJFRAME(control, usr, carnes, ventas);
         usuario.setVisible(true);
         usuario.setLocationRelativeTo(null);
 
@@ -324,7 +329,7 @@ public class pnlOpcionesUsuarios extends javax.swing.JPanel {
                 return;
             }
 
-            ModificarUsuarioJFRAME EDcliente = new ModificarUsuarioJFRAME(control, usr, id_usuarios);
+            ModificarUsuarioJFRAME EDcliente = new ModificarUsuarioJFRAME(control, usr, id_usuarios, carnes, ventas);
             EDcliente.setVisible(true);
             EDcliente.setLocationRelativeTo(null);
 

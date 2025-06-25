@@ -5,8 +5,10 @@ package Login;
  * @author jarav
  */
 import InterfazAdmin.InterfazAdmin;
+import Logica.Carne;
 import Logica.Controladora;
 import Logica.Usuario;
+import Logica.Venta;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -15,11 +17,14 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     Controladora control;
-
-    public Login() {
+  Carne carnes;
+  Venta ventas;
+    public Login(Carne carnes, Venta ventas) {
         initComponents();
         control = new Controladora();
-        //iniciarSesionAutomatico();
+        this.carnes = carnes;
+        this.ventas = ventas;
+        iniciarSesionAutomatico();
     }
 
     /**
@@ -194,7 +199,7 @@ public class Login extends javax.swing.JFrame {
 
             String rol = usr.getUnRol().getNombreRol();
             if (rol.equals("Admin")) {
-                InterfazAdmin admin = new InterfazAdmin(control, usr);
+                InterfazAdmin admin = new InterfazAdmin(control, usr,carnes, ventas);
                 admin.setVisible(true);
                 admin.setLocationRelativeTo(null);
                 this.dispose();
@@ -228,7 +233,7 @@ public class Login extends javax.swing.JFrame {
             if (usr != null) {
                 String rol = usr.getUnRol().getNombreRol();
                 if (rol.equals("Admin")) {
-                    InterfazAdmin admin = new InterfazAdmin(control, usr);
+                    InterfazAdmin admin = new InterfazAdmin(control, usr, carnes, ventas);
                     admin.setVisible(true);
                     admin.setLocationRelativeTo(null);
                     this.dispose();

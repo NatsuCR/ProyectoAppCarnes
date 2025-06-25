@@ -21,12 +21,12 @@ public class Carne implements Serializable {
     private String tipoDeCarne;
     private String descripcion;
     private int cantidad;
-    private double precioGramos;
+    private int precioGramos;
     
     public Carne() {
     }
 
-    public Carne(int id, String Marca, String tipoDeCarne, String descripcion, int cantidad, double precioGramos) {
+    public Carne(int id, String Marca, String tipoDeCarne, String descripcion, int cantidad, int precioGramos) {
         this.id = id;
         this.Marca = Marca;
         this.tipoDeCarne = tipoDeCarne;
@@ -79,11 +79,11 @@ public class Carne implements Serializable {
 
     
     
-    public double getPrecioGramos() {
+    public int getPrecioGramos() {
         return precioGramos;
     }
 
-    public void setPrecioGramos(double precioGramos) {
+    public void setPrecioGramos(int precioGramos) {
         this.precioGramos = precioGramos;
     }
     

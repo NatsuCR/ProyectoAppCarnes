@@ -1,15 +1,11 @@
-
 package Logica;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -17,30 +13,37 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Venta implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    private int idUsuario;
+    private String usuario;
+    private String apellidos;
+    private int idCarne;
+    private String tipoDeMarca;
+    private String tipoDeCarne;
+    private int cantidadAdquirida;
+    private int precio;
+    private double porcentaje;
 
-    @ManyToOne
-    private Usuario usuario;
-
-    private String fecha;
-
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
-    private List<DetalleVenta> detalles;
-
-    private double total;
-
-    // getters y setters
+    private Date fecha;
+    private int total;
 
     public Venta() {
     }
 
-    public Venta(int id, Usuario usuario, String fecha, List<DetalleVenta> detalles, double total) {
+    public Venta(int id, int idUsuario, String usuario, String apellidos, int idCarne, String tipoDeMarca, String tipoDeCarne, int cantidadAdquirida, int precio, double porcentaje, Date fecha, int total) {
         this.id = id;
+        this.idUsuario = idUsuario;
         this.usuario = usuario;
+        this.apellidos = apellidos;
+        this.idCarne = idCarne;
+        this.tipoDeMarca = tipoDeMarca;
+        this.tipoDeCarne = tipoDeCarne;
+        this.cantidadAdquirida = cantidadAdquirida;
+        this.precio = precio;
         this.fecha = fecha;
-        this.detalles = detalles;
         this.total = total;
     }
 
@@ -52,39 +55,86 @@ public class Venta implements Serializable {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getUsuario() {
         return usuario;
     }
 
-    public void setCliente(Usuario usuario) {
+    public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
 
-    public String getFecha() {
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public int getIdCarne() {
+        return idCarne;
+    }
+
+    public void setIdCarne(int idCarne) {
+        this.idCarne = idCarne;
+    }
+
+    public String getTipoDeMarca() {
+        return tipoDeMarca;
+    }
+
+    public void setTipoDeMarca(String tipoDeMarca) {
+        this.tipoDeMarca = tipoDeMarca;
+    }
+
+    public String getTipoDeCarne() {
+        return tipoDeCarne;
+    }
+
+    public void setTipoDeCarne(String tipoDeCarne) {
+        this.tipoDeCarne = tipoDeCarne;
+    }
+
+    public int getCantidadAdquirida() {
+        return cantidadAdquirida;
+    }
+
+    public void setCantidadAdquirida(int cantidadAdquirida) {
+        this.cantidadAdquirida = cantidadAdquirida;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+
+
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public List<DetalleVenta> getDetalles() {
-        return detalles;
-    }
-
-    public void setDetalles(List<DetalleVenta> detalles) {
-        this.detalles = detalles;
-    }
-
-    public double getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(int total) {
         this.total = total;
     }
-    
-    
-    
-}
 
+}

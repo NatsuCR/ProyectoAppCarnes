@@ -4,18 +4,17 @@
  */
 package Persistencia;
 
-import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import Logica.DetalleVenta;
 import Logica.Venta;
 import Persistencia.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -32,30 +31,18 @@ public class VentaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
+    //Conector a base de datos, HACERLO SIEMPRE, conecta a la logica
+    public VentaJpaController() {
+
+        emf = Persistence.createEntityManagerFactory("AppCarnesProyectoFinal");
+    }
+
     public void create(Venta venta) {
-        if (venta.getDetalles() == null) {
-            venta.setDetalles(new ArrayList<DetalleVenta>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<DetalleVenta> attachedDetalles = new ArrayList<DetalleVenta>();
-            for (DetalleVenta detallesDetalleVentaToAttach : venta.getDetalles()) {
-                detallesDetalleVentaToAttach = em.getReference(detallesDetalleVentaToAttach.getClass(), detallesDetalleVentaToAttach.getId());
-                attachedDetalles.add(detallesDetalleVentaToAttach);
-            }
-            venta.setDetalles(attachedDetalles);
             em.persist(venta);
-            for (DetalleVenta detallesDetalleVenta : venta.getDetalles()) {
-                Venta oldVentaOfDetallesDetalleVenta = detallesDetalleVenta.getVenta();
-                detallesDetalleVenta.setVenta(venta);
-                detallesDetalleVenta = em.merge(detallesDetalleVenta);
-                if (oldVentaOfDetallesDetalleVenta != null) {
-                    oldVentaOfDetallesDetalleVenta.getDetalles().remove(detallesDetalleVenta);
-                    oldVentaOfDetallesDetalleVenta = em.merge(oldVentaOfDetallesDetalleVenta);
-                }
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -69,34 +56,7 @@ public class VentaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Venta persistentVenta = em.find(Venta.class, venta.getId());
-            List<DetalleVenta> detallesOld = persistentVenta.getDetalles();
-            List<DetalleVenta> detallesNew = venta.getDetalles();
-            List<DetalleVenta> attachedDetallesNew = new ArrayList<DetalleVenta>();
-            for (DetalleVenta detallesNewDetalleVentaToAttach : detallesNew) {
-                detallesNewDetalleVentaToAttach = em.getReference(detallesNewDetalleVentaToAttach.getClass(), detallesNewDetalleVentaToAttach.getId());
-                attachedDetallesNew.add(detallesNewDetalleVentaToAttach);
-            }
-            detallesNew = attachedDetallesNew;
-            venta.setDetalles(detallesNew);
             venta = em.merge(venta);
-            for (DetalleVenta detallesOldDetalleVenta : detallesOld) {
-                if (!detallesNew.contains(detallesOldDetalleVenta)) {
-                    detallesOldDetalleVenta.setVenta(null);
-                    detallesOldDetalleVenta = em.merge(detallesOldDetalleVenta);
-                }
-            }
-            for (DetalleVenta detallesNewDetalleVenta : detallesNew) {
-                if (!detallesOld.contains(detallesNewDetalleVenta)) {
-                    Venta oldVentaOfDetallesNewDetalleVenta = detallesNewDetalleVenta.getVenta();
-                    detallesNewDetalleVenta.setVenta(venta);
-                    detallesNewDetalleVenta = em.merge(detallesNewDetalleVenta);
-                    if (oldVentaOfDetallesNewDetalleVenta != null && !oldVentaOfDetallesNewDetalleVenta.equals(venta)) {
-                        oldVentaOfDetallesNewDetalleVenta.getDetalles().remove(detallesNewDetalleVenta);
-                        oldVentaOfDetallesNewDetalleVenta = em.merge(oldVentaOfDetallesNewDetalleVenta);
-                    }
-                }
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -125,11 +85,6 @@ public class VentaJpaController implements Serializable {
                 venta.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The venta with id " + id + " no longer exists.", enfe);
-            }
-            List<DetalleVenta> detalles = venta.getDetalles();
-            for (DetalleVenta detallesDetalleVenta : detalles) {
-                detallesDetalleVenta.setVenta(null);
-                detallesDetalleVenta = em.merge(detallesDetalleVenta);
             }
             em.remove(venta);
             em.getTransaction().commit();
@@ -185,5 +140,5 @@ public class VentaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

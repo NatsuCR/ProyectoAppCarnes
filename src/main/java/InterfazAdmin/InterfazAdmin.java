@@ -1,9 +1,11 @@
-
 package InterfazAdmin;
 
+import Logica.Carne;
 import Logica.Controladora;
 import Logica.Usuario;
+import Logica.Venta;
 import Login.Login;
+
 /**
  *
  * @author jarav
@@ -13,16 +15,16 @@ public class InterfazAdmin extends javax.swing.JFrame {
     /**
      * Creates new form Adminisitracion
      */
-    
     Controladora control;
     Usuario usr;
-     
-    
-    public InterfazAdmin(Controladora  control, Usuario usr) {
+    Carne carnes;
+    Venta ventas;
+    public InterfazAdmin(Controladora control, Usuario usr, Carne carnes, Venta ventas) {
         initComponents();
         this.control = control;
         this.usr = usr;
-        
+        this.carnes = carnes;
+        this.ventas = ventas;
     }
 
     /**
@@ -46,10 +48,10 @@ public class InterfazAdmin extends javax.swing.JFrame {
         btnCalcular = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnHistorialVentas = new javax.swing.JButton();
         pnlContenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1250, 500));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -123,6 +125,11 @@ public class InterfazAdmin extends javax.swing.JFrame {
 
         btnCalcular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCalcular.setText("Calcular");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
 
         btnVolver.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnVolver.setText("Volver");
@@ -140,6 +147,14 @@ public class InterfazAdmin extends javax.swing.JFrame {
             }
         });
 
+        btnHistorialVentas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnHistorialVentas.setText("Historial de ventas");
+        btnHistorialVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialVentasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -147,16 +162,17 @@ public class InterfazAdmin extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnRegistrarCarnes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jLabel4)))
+                            .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(btnHistorialVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -170,7 +186,9 @@ public class InterfazAdmin extends javax.swing.JFrame {
                 .addComponent(btnRegistrarCarnes)
                 .addGap(18, 18, 18)
                 .addComponent(btnCalcular)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnHistorialVentas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir)
@@ -237,7 +255,7 @@ public class InterfazAdmin extends javax.swing.JFrame {
         int x = 0;
         int y = 0;
 
-        pnlOpcionesUsuarios agregar = new pnlOpcionesUsuarios(control, usr);
+        pnlOpcionesUsuarios agregar = new pnlOpcionesUsuarios(control, usr, carnes, ventas);
         agregar.setSize(width, height);
         agregar.setLocation(x, y);
 
@@ -249,21 +267,21 @@ public class InterfazAdmin extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        this.txtNomnreCedula.setText(usr.getCedula());
-        
+        this.txtNomnreCedula.setText(usr.getCedula() + " " + usr.getNombre());
+
     }//GEN-LAST:event_formWindowOpened
 
     private void btnRegistrarCarnesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCarnesActionPerformed
         // TODO add your handling code here:
-        
-                // Obtener dimensiones actuales del contenedor
+
+        // Obtener dimensiones actuales del contenedor
         int width = pnlContenedor.getWidth();
         int height = pnlContenedor.getHeight();
 
         int x = 0;
         int y = 0;
 
-        pnlOpcionesCarnes agregar = new pnlOpcionesCarnes(control, usr);
+        pnlOpcionesCarnes agregar = new pnlOpcionesCarnes(control, usr, carnes,ventas);
         agregar.setSize(width, height);
         agregar.setLocation(x, y);
 
@@ -271,7 +289,7 @@ public class InterfazAdmin extends javax.swing.JFrame {
         pnlContenedor.add(agregar);
         pnlContenedor.revalidate();
         pnlContenedor.repaint();
-        
+
     }//GEN-LAST:event_btnRegistrarCarnesActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -282,16 +300,70 @@ public class InterfazAdmin extends javax.swing.JFrame {
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
-        Login l = new Login();
+        Login l = new Login(carnes, ventas);
         l.setVisible(true);
         l.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+        // TODO add your handling code here:
+        CalcularVentaJFRAME venta = new CalcularVentaJFRAME(control, usr, carnes, ventas);
+        venta.setVisible(true);
+        venta.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btnCalcularActionPerformed
 
+    private void btnHistorialVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialVentasActionPerformed
+        // TODO add your handling code here:
+        // Obtener dimensiones actuales del contenedor
+        int width = pnlContenedor.getWidth();
+        int height = pnlContenedor.getHeight();
+
+        int x = 0;
+        int y = 0;
+
+        pnlHistorialVentas agregar = new pnlHistorialVentas(control, usr, carnes, ventas);
+        agregar.setSize(width, height);
+        agregar.setLocation(x, y);
+
+        pnlContenedor.removeAll();
+        pnlContenedor.add(agregar);
+        pnlContenedor.revalidate();
+        pnlContenedor.repaint();
+
+    }//GEN-LAST:event_btnHistorialVentasActionPerformed
+
+    public static void main(String args[]) {
+        // Configurar apariencia Nimbus (puede quedarse como está)
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        // Crear y mostrar la ventana principal
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Controladora control = new Controladora(); // Instancia real
+                Usuario usr = new Usuario(); // Usuario vacío o de prueba (opcional)
+                usr.setCedula("Administrador"); // Si necesitás que no sea null
+                usr.setNombre("Main admin");
+                Carne carnes = new Carne();
+                Venta ventas = new Venta();
+                new InterfazAdmin(control, usr, carnes, ventas).setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalcular;
+    private javax.swing.JButton btnHistorialVentas;
     private javax.swing.JButton btnRegistrarCarnes;
     private javax.swing.JButton btnRegistrarUsuario;
     private javax.swing.JButton btnSalir;

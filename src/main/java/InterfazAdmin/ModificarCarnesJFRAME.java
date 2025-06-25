@@ -3,6 +3,7 @@ package InterfazAdmin;
 import Logica.Carne;
 import Logica.Controladora;
 import Logica.Usuario;
+import Logica.Venta;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,13 +19,14 @@ public class ModificarCarnesJFRAME extends javax.swing.JFrame {
     Usuario usr;
     int id_Carne;
     Carne carneEditar;
-    
-    public ModificarCarnesJFRAME(Controladora control, Usuario usr, int id_Carne) {
+    Carne carnes;
+    Venta ventas;
+    public ModificarCarnesJFRAME(Controladora control, Usuario usr, int id_Carne, Carne carnes, Venta ventas) {
         initComponents();
         this.control = control;
         this.usr = usr;
         this.id_Carne = id_Carne;
-        
+        this.carnes = carnes;
     }
 
     /**
@@ -247,7 +249,7 @@ public class ModificarCarnesJFRAME extends javax.swing.JFrame {
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
 
-        InterfazAdmin admin = new InterfazAdmin(control, usr);
+        InterfazAdmin admin = new InterfazAdmin(control, usr, carnes, ventas);
         admin.setVisible(true);
         admin.setLocationRelativeTo(null);
         this.dispose();
@@ -278,9 +280,9 @@ public class ModificarCarnesJFRAME extends javax.swing.JFrame {
             return;
         }
         
-        double precio;
+        int precio;
         try {
-            precio = Double.parseDouble(condicionalPrecio);
+            precio = Integer.parseInt(condicionalPrecio);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El precio debe ser un número válido.");
             return;

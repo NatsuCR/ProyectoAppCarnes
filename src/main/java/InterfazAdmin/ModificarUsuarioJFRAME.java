@@ -6,6 +6,8 @@ import Logica.Usuario;
 import java.util.List;
 import javax.swing.JOptionPane;
 import Encriptaciones.Hashead;
+import Logica.Carne;
+import Logica.Venta;
 /**
  *
  * @author jarav
@@ -17,13 +19,15 @@ public class ModificarUsuarioJFRAME extends javax.swing.JFrame {
     int id_usuario;
     Usuario usuarioAEditar;
     Hashead hash = new Hashead();
-    
-    
-    public ModificarUsuarioJFRAME(Controladora control, Usuario usr, int id_usuario) {
+    Carne carnes;
+    Venta ventas;
+    public ModificarUsuarioJFRAME(Controladora control, Usuario usr, int id_usuario, Carne carnes,Venta ventas) {
         initComponents();
         this.control = control;
         this.usr = usr;
         this.id_usuario = id_usuario;
+        this.carnes = carnes;
+        this.ventas = ventas;
     }
 
     /**
@@ -48,6 +52,10 @@ public class ModificarUsuarioJFRAME extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtApellidos = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -108,39 +116,60 @@ public class ModificarUsuarioJFRAME extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Nombre");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Apellidos");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                         .addComponent(btnLimpiar))
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(txtCedula)
-                    .addComponent(txtContraseña)
-                    .addComponent(cboxRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVolver)
-                .addGap(112, 112, 112))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVolver)
+                        .addGap(69, 69, 69))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(txtCedula)
+                            .addComponent(txtContraseña)
+                            .addComponent(cboxRol, 0, 210, Short.MAX_VALUE)
+                            .addComponent(txtNombre)
+                            .addComponent(txtApellidos))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
@@ -152,7 +181,7 @@ public class ModificarUsuarioJFRAME extends javax.swing.JFrame {
                     .addComponent(btnLimpiar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnVolver)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -190,7 +219,7 @@ public class ModificarUsuarioJFRAME extends javax.swing.JFrame {
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
 
-        InterfazAdmin admin = new InterfazAdmin(control, usr);
+        InterfazAdmin admin = new InterfazAdmin(control, usr, carnes, ventas);
         admin.setVisible(true);
         admin.setLocationRelativeTo(null);
         this.dispose();
@@ -201,15 +230,17 @@ public class ModificarUsuarioJFRAME extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         // TODO add your handling code here:
-        String nombre = txtCedula.getText();
+        String cedula = txtCedula.getText();
         String contraseña = Hashead.encriptarContraseña(txtContraseña.getText());
+        String nombre = txtNombre.getText();
+        String apellidos = txtApellidos.getText();
         String rolRecibido = (String) cboxRol.getSelectedItem();
 
         if (nombre.isEmpty() || contraseña.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Complete todos los campos.");
             return;
         } else {
-            control.editarUsuario(usuarioAEditar, nombre, contraseña, rolRecibido);
+            control.editarUsuario(usuarioAEditar, cedula, nombre,apellidos, contraseña, rolRecibido);
             JOptionPane.showMessageDialog(this, "Usuario modificado correctamente.");
         }
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -247,10 +278,14 @@ public class ModificarUsuarioJFRAME extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JPasswordField txtContraseña;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,6 +3,7 @@ package InterfazAdmin;
 import Logica.Carne;
 import Logica.Controladora;
 import Logica.Usuario;
+import Logica.Venta;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -20,11 +21,15 @@ public class pnlOpcionesCarnes extends javax.swing.JPanel {
      */
     Controladora control;
     Usuario usr;
+    Carne carnes;
+    Venta ventas;
 
-    public pnlOpcionesCarnes(Controladora control, Usuario usr) {
+    public pnlOpcionesCarnes(Controladora control, Usuario usr, Carne carnes, Venta ventas) {
         initComponents();
         this.control = control;
         this.usr = usr;
+        this.carnes = carnes;
+        this.ventas = ventas;
         cargarTabla();
     }
 
@@ -256,7 +261,7 @@ public class pnlOpcionesCarnes extends javax.swing.JPanel {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
 
-        RegistrarCarnesJFRAME carne = new RegistrarCarnesJFRAME(control, usr);
+        RegistrarCarnesJFRAME carne = new RegistrarCarnesJFRAME(control, usr, carnes, ventas);
         carne.setVisible(true);
         carne.setLocationRelativeTo(null);
 
@@ -311,7 +316,7 @@ public class pnlOpcionesCarnes extends javax.swing.JPanel {
         if (TablaCarnes.getSelectedRow() != -1) {
             int id_Carnes = Integer.parseInt(String.valueOf(TablaCarnes.getValueAt(TablaCarnes.getSelectedRow(), 0)));
 
-            ModificarCarnesJFRAME ECarnes = new ModificarCarnesJFRAME(control, usr, id_Carnes);
+            ModificarCarnesJFRAME ECarnes = new ModificarCarnesJFRAME(control, usr, id_Carnes, carnes, ventas);
             ECarnes.setVisible(true);
             ECarnes.setLocationRelativeTo(null);
 

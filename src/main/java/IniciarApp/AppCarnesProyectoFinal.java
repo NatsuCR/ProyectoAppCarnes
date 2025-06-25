@@ -1,6 +1,8 @@
 
 package IniciarApp;
 
+import Logica.Carne;
+import Logica.Venta;
 import Login.Login;
 
 /**
@@ -10,8 +12,11 @@ import Login.Login;
 public class AppCarnesProyectoFinal {
 
     public static void main(String[] args) {
-        Login l = new Login();
-        l.setVisible(true); //FALSE PARA NO DOBLE PANTALLA.
+        Carne carnes = new Carne();
+        Venta ventas = new Venta();
+        
+        Login l = new Login(carnes, ventas);
+        l.setVisible(false); //FALSE PARA NO DOBLE PANTALLA.
         l.setLocationRelativeTo(null);
         
     }

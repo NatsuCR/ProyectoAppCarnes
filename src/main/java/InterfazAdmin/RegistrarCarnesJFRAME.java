@@ -1,8 +1,10 @@
 
 package InterfazAdmin;
 
+import Logica.Carne;
 import Logica.Controladora;
 import Logica.Usuario;
+import Logica.Venta;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,13 +19,14 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
     
         Controladora control;
     Usuario usr;
-    
-    public RegistrarCarnesJFRAME(    Controladora control,Usuario usr) {
+    Carne carnes;
+    Venta ventas;
+    public RegistrarCarnesJFRAME(    Controladora control,Usuario usr, Carne carnes, Venta ventas) {
         initComponents();
         this.control = control;
         this.usr = usr;
-        
-        
+        this.carnes = carnes;
+        this.ventas = ventas;
     }
 
     /**
@@ -241,7 +244,7 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
         
-        InterfazAdmin admin = new InterfazAdmin(control, usr);
+        InterfazAdmin admin = new InterfazAdmin(control, usr, carnes, ventas);
         admin.setVisible(true);
         admin.setLocationRelativeTo(null);
         this.dispose();
@@ -268,7 +271,7 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
         String tipoCarne = txtTipodeCarne.getText();
         String descripcion = txtDescripcion.getText();
         int cantidad = Integer.parseInt(txtCantidad.getText());
-        double precio = Double.parseDouble(txtPrecio.getText());
+        int precio = Integer.parseInt(txtPrecio.getText());
         
         
         if(marca.isEmpty() || tipoCarne.isEmpty() || descripcion.isEmpty()){

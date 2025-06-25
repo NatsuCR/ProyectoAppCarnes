@@ -19,6 +19,8 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String cedula;
+    private String nombre;
+    private String apellidos;
     private String contraseña;
     @ManyToOne
     @JoinColumn(name = "fk_rol")
@@ -27,9 +29,11 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(int id, String cedula, String contraseña, Rol unRol) {
+    public Usuario(int id, String cedula, String nombre, String apellidos, String contraseña, Rol unRol) {
         this.id = id;
         this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
         this.contraseña = contraseña;
         this.unRol = unRol;
     }
@@ -48,6 +52,22 @@ public class Usuario implements Serializable {
 
     public void setCedula(String cedula) {
         this.cedula = cedula;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getContraseña() {

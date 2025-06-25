@@ -4,6 +4,9 @@ import Persistencia.ControladoraPersistencia;
 import java.util.List;
 import javax.swing.JOptionPane;
 import Encriptaciones.Hashead;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -38,11 +41,13 @@ public class Controladora {
         return false;
     }
 
-    public void crearUsuario(String cedula, String contraseñaEncriptada, String rolRecibido) {
+    public void crearUsuario(String cedula, String contraseñaEncriptada, String nombre, String apellidos, String rolRecibido) {
 
         //Crear una nueva instancia para porder guardar el usuario
         Usuario usu = new Usuario();
         usu.setCedula(cedula);
+        usu.setNombre(nombre);
+        usu.setApellidos(apellidos);
         usu.setContraseña(contraseñaEncriptada);
 
         //Crear una nueva instancia para poder guardar el rol
@@ -89,14 +94,20 @@ public class Controladora {
 
     }
 
+    public Usuario traerUsuarioPorId(int id_usuario) {
+        return controlPersistencia.traerUsuarioPorId(id_usuario);
+    }
+
     public void borrarUsuarios(int id_usuarios) {
         controlPersistencia.borrarUsuarios(id_usuarios);
     }
 
-    public void editarUsuario(Usuario user, String cedula, String contraseña, String rolRecibido) {
+    public void editarUsuario(Usuario user, String cedula, String nombre, String apellidos, String contraseña, String rolRecibido) {
 
         user.setCedula(cedula);
         user.setContraseña(contraseña);
+        user.setApellidos(apellidos);
+        user.setNombre(nombre);
         //Crear una nueva instancia para poder guardar el rol
         Rol rolEncontrado = new Rol();
         //rolEncontrado ser = a lo que traerRoles encuentre del rolRecibido por parametro
@@ -108,11 +119,7 @@ public class Controladora {
         controlPersistencia.editarUsuario(user);
     }
 
-    public Usuario traerUsuarioPorId(int id_usuario) {
-        return controlPersistencia.traerUsuarioPorId(id_usuario);
-    }
-
-    public void agregarCarne(String marca, String tipoCarne, String descripcion, int cantidad, double precio) {
+    public void agregarCarne(String marca, String tipoCarne, String descripcion, int cantidad, int precio) {
         Carne carnes = new Carne();
 
         carnes.setMarca(marca);
@@ -133,7 +140,7 @@ public class Controladora {
         controlPersistencia.borrarCarne(id_Carne);
     }
 
-    public void editarCarne(Carne carneEditar, String marca, String tipoCarne, String descripcion,int cantidad, double precio) {
+    public void editarCarne(Carne carneEditar, String marca, String tipoCarne, String descripcion, int cantidad, int precio) {
         carneEditar.setMarca(marca);
         carneEditar.setTipoDeCarne(tipoCarne);
         carneEditar.setDescripcion(descripcion);
@@ -146,4 +153,58 @@ public class Controladora {
         return controlPersistencia.traerCarnePorId(id_Carne);
     }
 
+    public int calcular(int cantidad, int precio, double porcentaje) {
+        int subtotal = cantidad * precio;
+        double porcentajeReal = porcentaje / 100;
+        int total = (int) (subtotal + (subtotal * porcentajeReal));
+        return total;
+    }
+    
+    public int obtenerCantidadDisponible(int idCarne) {
+    Carne carne = controlPersistencia.traerCarnePorId(idCarne); // o como lo tengas
+    return carne != null ? carne.getCantidad() : 0;
+}
+    
+
+    public void agregarVenta(Venta NuevaVenta, int idUsuario, String usuario, String apellidos, int idCarne, String marca, String tipoCarne, int cantidad, int precio, Date fecha, int total) {
+        NuevaVenta.setIdUsuario(idUsuario);
+        NuevaVenta.setUsuario(usuario);
+        NuevaVenta.setApellidos(apellidos);
+        NuevaVenta.setIdCarne(idCarne);
+        NuevaVenta.setTipoDeMarca(marca);
+        NuevaVenta.setTipoDeCarne(tipoCarne);
+        NuevaVenta.setCantidadAdquirida(cantidad);
+        NuevaVenta.setPrecio(precio);
+        NuevaVenta.setFecha(fecha);
+        NuevaVenta.setTotal(total);
+        controlPersistencia.agregarVenta(NuevaVenta);
+    }
+
+    public void eliminarCantidadesenBD(int idCarne, int cantidad) {
+        controlPersistencia.borrarCarneCantidades(idCarne, cantidad);
+    }
+
+    public List<Venta> traerVentas() {
+        return controlPersistencia.traerVentas();
+    }
+    
+    public List<Venta> traerVentasPorFecha(Date fecha) {
+    List<Venta> todasLasVentas = controlPersistencia.traerVentas();
+    List<Venta> ventasFiltradas = new ArrayList<>();
+
+    // Comparar solo día/mes/año ignorando la hora
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+    for (Venta venta : todasLasVentas) {
+        if (sdf.format(venta.getFecha()).equals(sdf.format(fecha))) {
+            ventasFiltradas.add(venta);
+        }
+    }
+
+    return ventasFiltradas;
+}
+    
+    
+    
+    
 }
