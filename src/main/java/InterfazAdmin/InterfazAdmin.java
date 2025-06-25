@@ -60,7 +60,7 @@ public class InterfazAdmin extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 0, 0));
 
-        jPanel3.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel3.setBackground(new java.awt.Color(191, 44, 36));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -99,7 +99,7 @@ public class InterfazAdmin extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel4.setBackground(new java.awt.Color(191, 44, 36));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setForeground(new java.awt.Color(204, 0, 0));
 

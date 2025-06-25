@@ -51,7 +51,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 0, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
 
-        jPanel2.setBackground(new java.awt.Color(255, 51, 0));
+        jPanel2.setBackground(new java.awt.Color(191, 44, 36));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -75,7 +75,7 @@ public class Login extends javax.swing.JFrame {
                 .addGap(21, 21, 21))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel3.setBackground(new java.awt.Color(191, 44, 36));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), new java.awt.Color(204, 204, 204)));
         jPanel3.setForeground(new java.awt.Color(255, 0, 0));
 

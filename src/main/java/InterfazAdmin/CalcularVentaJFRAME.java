@@ -91,7 +91,7 @@ public class CalcularVentaJFRAME extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 0, 0));
         jPanel1.setForeground(new java.awt.Color(255, 0, 0));
 
-        jPanel2.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(191, 44, 36));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -115,7 +115,7 @@ public class CalcularVentaJFRAME extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel3.setBackground(new java.awt.Color(191, 44, 36));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -414,7 +414,7 @@ public class CalcularVentaJFRAME extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        jMenuBar1.setBackground(new java.awt.Color(204, 0, 0));
+        jMenuBar1.setBackground(new java.awt.Color(191, 44, 36));
         jMenuBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
 
         MainMenuOpciones.setForeground(new java.awt.Color(255, 255, 255));

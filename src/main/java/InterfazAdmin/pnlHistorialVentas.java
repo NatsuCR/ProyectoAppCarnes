@@ -283,7 +283,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Id_Venta");
         modelo.addColumn("IdUsuario");
-        modelo.addColumn("Usuario");
+        modelo.addColumn("Nombre");
         modelo.addColumn("Apellidos");
         modelo.addColumn("IdCarne");
         modelo.addColumn("TipoDeCarne");
