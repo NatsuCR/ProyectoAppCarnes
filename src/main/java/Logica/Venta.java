@@ -25,7 +25,7 @@ public class Venta implements Serializable {
     private String tipoDeCarne;
     private int cantidadAdquirida;
     private int precio;
-    private double porcentaje;
+
 
     private Date fecha;
     private int total;

@@ -31,12 +31,12 @@ public class VentaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    //Conector a base de datos, HACERLO SIEMPRE, conecta a la logica
+        //Conector a base de datos, HACERLO SIEMPRE, conecta a la logica
     public VentaJpaController() {
 
         emf = Persistence.createEntityManagerFactory("AppCarnesProyectoFinal");
     }
-
+    
     public void create(Venta venta) {
         EntityManager em = null;
         try {
@@ -140,5 +140,5 @@ public class VentaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

@@ -59,7 +59,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         };
 
         //Establecemos titulos
-        String titulos[] = {"ID", "IdUsuario", "Nombre", "Apeliidos", "IdCarne", "TipoDeCarne", "Marca", "Fecha", "CantidadAdquirida", "Total"};
+        String titulos[] = {"Id_Venta", "IdUsuario", "Nombre", "Apeliidos", "IdCarne", "TipoDeCarne", "Marca", "Fecha", "CantidadAdquirida", "Total"};
         //Envia los titulos a un identificador de columnas
         modeloTabla.setColumnIdentifiers(titulos);
 
@@ -287,7 +287,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         modelo.addColumn("Apellidos");
         modelo.addColumn("IdCarne");
         modelo.addColumn("TipoDeCarne");
-        modelo.addColumn("TipoDeMarca");
+        modelo.addColumn("Marca");
         modelo.addColumn("Fecha");
         modelo.addColumn("Cantidad Adquirida");
         modelo.addColumn("Total");
