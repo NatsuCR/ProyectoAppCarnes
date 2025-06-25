@@ -475,8 +475,10 @@ public class CalcularVentaJFRAME extends javax.swing.JFrame {
                 != null) {
             //Si no hay null, entonces recorrecmos la listaUsuarios
             for (Carne carnes : listaCarnes) {
+                NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
+                String totalFormateado = formatoMiles.format(carnes.getPrecioGramos());
                 //Guardarlo en un array o list de tipo object, porque hay varios tipos de datos
-                Object[] objeto = {carnes.getId(), carnes.getMarca(), carnes.getTipoDeCarne(), carnes.getDescripcion(), carnes.getCantidad(), carnes.getPrecioGramos()};
+                Object[] objeto = {carnes.getId(), carnes.getMarca(), carnes.getTipoDeCarne(), carnes.getDescripcion(), carnes.getCantidad(), totalFormateado+"₡"};
 
                 //Agregamos el los datos que recorrio el for a la tabla 
                 modeloTabla.addRow(objeto);

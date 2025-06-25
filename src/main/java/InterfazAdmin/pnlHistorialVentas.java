@@ -5,7 +5,10 @@ import Logica.Controladora;
 import Logica.Usuario;
 import Logica.Venta;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import java.text.NumberFormat;
@@ -71,9 +74,11 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         if (listaVentas != null) {
             //Si no hay null, entonces recorrecmos la listaUsuarios
             for (Venta vent : listaVentas) {
+                NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
+                String totalFormateado = formatoMiles.format(vent.getTotal());
                 //Guardarlo en un array o list de tipo object, porque hay varios tipos de datos
                 Object[] objeto = {vent.getId(), vent.getIdUsuario(), vent.getUsuario(), vent.getApellidos(), vent.getIdCarne(), vent.getTipoDeCarne(),
-                    vent.getTipoDeMarca(), vent.getFecha(), vent.getCantidadAdquirida(), vent.getTotal()};
+                    vent.getTipoDeMarca(), vent.getFecha(), vent.getCantidadAdquirida(), totalFormateado + "₡"};
 
                 //Agregamos el los datos que recorrio el for a la tabla 
                 modeloTabla.addRow(objeto);
@@ -319,7 +324,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
 
     private void btnHacerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHacerFacturaActionPerformed
         // TODO add your handling code here:
-    int filaSeleccionada = TablaHistorialVentas.getSelectedRow();
+     int filaSeleccionada = TablaHistorialVentas.getSelectedRow();
 
     if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(null, "Seleccione una venta de la tabla.");
@@ -350,7 +355,7 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         String fechaBonita = formatoEspañol.format(fechaConvertida);
 
         // Formatear total
-        precioTotal = precioTotal.replace(".", "");
+        precioTotal = precioTotal.replace(".", "").replace(",", "").replace("₡", "").trim();
         int totalEntero = Integer.parseInt(precioTotal);
         NumberFormat formatoMiles = NumberFormat.getInstance(new Locale("es", "ES"));
         String totalFormateado = formatoMiles.format(totalEntero);
@@ -359,21 +364,60 @@ public class pnlHistorialVentas extends javax.swing.JPanel {
         Document documento = new Document();
         String ruta = "Factura_" + nombreUsuario + "_" + fechaSegura + ".pdf";
         PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+
+        // Crear fuente con Arial
+        BaseFont bf = BaseFont.createFont("C:/Users/jarav/Documents/NetBeansProjects/AppCarnesProyectoFinal/Arial Folder/ARIAL.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        Font font = new Font(bf, 12, Font.NORMAL);
+
         documento.open();
 
-        documento.add(new Paragraph("----- FACTURA DE VENTA -----"));
-        documento.add(new Paragraph("Id de compra " + "(Id: " + idCompra + ")"));
-        documento.add(new Paragraph("Cliente: " + nombreUsuario + " " + apellidos + " (ID: " + idUsuario + ")"));
-        documento.add(new Paragraph("Id de carne " + "(Id: " + idCarne + ")"));
-        documento.add(new Paragraph("Tipo de carne: " + tipoCarne));
-        documento.add(new Paragraph("Tipo de Marca: " + tipoMarca));
-        documento.add(new Paragraph("Fecha: " + fechaBonita));
-        documento.add(new Paragraph("Cantidad: " + cantidad + " Unidades"));
-        documento.add(new Paragraph("Total a pagar: " + totalFormateado + " Colones"));
-        documento.add(new Paragraph("---------------------------------"));
-        documento.add(new Paragraph("Gracias por su compra."));
+        // Crear párrafos con alineación centrada
+        Paragraph titulo = new Paragraph("----- FACTURA DE VENTA -----", font);
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(titulo);
+
+        Paragraph idCompraParrafo = new Paragraph("Id de compra (Id: " + idCompra + ")", font);
+        idCompraParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(idCompraParrafo);
+
+        Paragraph clienteParrafo = new Paragraph("Cliente: " + nombreUsuario + " " + apellidos + " (ID: " + idUsuario + ")", font);
+        clienteParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(clienteParrafo);
+
+        Paragraph carneIdParrafo = new Paragraph("Id de carne (Id: " + idCarne + ")", font);
+        carneIdParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(carneIdParrafo);
+
+        Paragraph tipoCarneParrafo = new Paragraph("Tipo de carne: " + tipoCarne, font);
+        tipoCarneParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(tipoCarneParrafo);
+
+        Paragraph tipoMarcaParrafo = new Paragraph("Tipo de Marca: " + tipoMarca, font);
+        tipoMarcaParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(tipoMarcaParrafo);
+
+        Paragraph fechaParrafo = new Paragraph("Fecha: " + fechaBonita, font);
+        fechaParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(fechaParrafo);
+
+        Paragraph cantidadParrafo = new Paragraph("Cantidad: " + cantidad + " Unidades", font);
+        cantidadParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(cantidadParrafo);
+
+        Paragraph totalParrafo = new Paragraph("Total a pagar: ₡" + totalFormateado + " Colones", font);
+        totalParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(totalParrafo);
+
+        Paragraph lineaSeparadora = new Paragraph("---------------------------------", font);
+        lineaSeparadora.setAlignment(Element.ALIGN_CENTER);
+        documento.add(lineaSeparadora);
+
+        Paragraph graciasParrafo = new Paragraph("Gracias por su compra.", font);
+        graciasParrafo.setAlignment(Element.ALIGN_CENTER);
+        documento.add(graciasParrafo);
 
         documento.close();
+
         JOptionPane.showMessageDialog(null, "Factura generada correctamente:\n" + ruta);
     } catch (Exception e) {
         e.printStackTrace();
