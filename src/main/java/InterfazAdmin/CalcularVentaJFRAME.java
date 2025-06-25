@@ -593,16 +593,19 @@ public class CalcularVentaJFRAME extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "La cantidad ingresada (" + cantidad
                     + ") supera la disponible en inventario (" + cantidadDisponible + ").");
             return;
+        } 
+        //Hacer las condiciones
+        else {
+            int totalCalculado = control.calcular(cantidad, precio, porcentaje);
+            Venta nuevaVenta = new Venta();
+            txtTotal.setText(String.valueOf(totalCalculado));
+
+            control.eliminarCantidadesenBD(idCarne, cantidad);
+            control.agregarVenta(nuevaVenta, idUsuario, usuario, apellidos, idCarne, marca, tipoCarne, cantidad, precio, fecha, totalCalculado);
+            cargarTablasCarnes();
+            cargarTablasClientes();
         }
 
-        int totalCalculado = control.calcular(cantidad, precio, porcentaje);
-        Venta nuevaVenta = new Venta();
-        txtTotal.setText(String.valueOf(totalCalculado));
-
-        control.eliminarCantidadesenBD(idCarne, cantidad);
-        control.agregarVenta(nuevaVenta, idUsuario, usuario, apellidos, idCarne, marca, tipoCarne, cantidad, precio, fecha, totalCalculado);
-        cargarTablasCarnes();
-        cargarTablasClientes();
 
     }//GEN-LAST:event_btnCalcularActionPerformed
 
