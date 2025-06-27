@@ -33,6 +33,7 @@ public class pnlOpcionesCarnes extends javax.swing.JPanel {
         this.carnes = carnes;
         this.ventas = ventas;
         cargarTabla();
+        
     }
 
     /**
@@ -279,7 +280,6 @@ public class pnlOpcionesCarnes extends javax.swing.JPanel {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-
         //Que la tabla tenga elementos
         if (TablaCarnes.getRowCount() > 0) {
             //Que se halla selecionado un elemento en la tabla

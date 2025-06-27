@@ -34,7 +34,7 @@ public class Carne implements Serializable {
         this.cantidad = cantidad;
         this.precioGramos = precioGramos;
     }
-
+    //Getters and setters
  
 
     public int getId() {

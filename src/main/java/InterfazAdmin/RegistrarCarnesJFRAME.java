@@ -266,15 +266,17 @@ public class RegistrarCarnesJFRAME extends javax.swing.JFrame {
         
         
         
-        
+        //Datos
         String marca = txtMarca.getText();
         String tipoCarne = txtTipodeCarne.getText();
         String descripcion = txtDescripcion.getText();
         int cantidad = Integer.parseInt(txtCantidad.getText());
+        String condicionlaCantidad = txtCantidad.getText();
         int precio = Integer.parseInt(txtPrecio.getText());
+        String condicionalPrecio = txtPrecio.getText();
         
-        
-        if(marca.isEmpty() || tipoCarne.isEmpty() || descripcion.isEmpty()){
+        //Condición
+        if(marca.isEmpty() || tipoCarne.isEmpty() || descripcion.isEmpty() || condicionalPrecio.isEmpty() || condicionlaCantidad.isEmpty()){
             JOptionPane.showMessageDialog(null, "Rellene todos los campos");
             
         }
