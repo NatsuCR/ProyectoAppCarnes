@@ -24,7 +24,7 @@ public class Login extends javax.swing.JFrame {
         control = new Controladora();
         this.carnes = carnes;
         this.ventas = ventas;
-        iniciarSesionAutomatico();
+      //  iniciarSesionAutomatico();
     }
 
     /**
