@@ -1,0 +1,1 @@
+Cuando creen la base de datos, por favor creen los roles para luego iniciar desde la interfaz, si no, no les va a funcionar la aplicación.
