@@ -1,0 +1,61 @@
+
+http://localhost:8012/putCarne.php
+
+put = actualizar datos. 
+
+ejemplos: 
+{
+
+  "ID": "1",
+  "MARCA": "Marca actualizada",
+  "CANTIDAD": "250",
+  "DESCRIPCION": "Corte fresco",
+  "PRECIOGRAMOS": "60",
+  "TIPODECARNE": "Res"
+
+}
+
+http://localhost:8012/getCarne.php
+
+get = traer
+
+
+http://localhost:8012/postCarne.php
+
+post = meter datos.
+
+ejemplos
+{
+
+    "MARCA": "Monteverde",
+    "CANTIDAD": "250",
+    "DESCRIPCION": "Carne molida de res",
+    "PRECIOGRAMOS": "50",
+    "TIPODECARNE": "Res"
+
+
+}
+
+http://localhost:8012/patchCarne.php
+
+patch = modificar dato especifico de id.
+ejemplo
+{
+
+  "ID": "1",
+  "CANTIDAD": "300",
+  "PRECIOGRAMOS": "55"
+
+}
+
+http://localhost:8012/deleteCarne.php
+
+delete = eliminar por ID o IDs, IDs = [ids].
+ejemplo
+{
+  "ID": "1"
+}
+o
+{
+  "IDs": [2, 3, 4]
+}
